@@ -1,0 +1,483 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart Task Manager</title>
+    <link rel="icon" type="image/png" href="./images/logo.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet"> 
+
+    <link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+
+
+<link rel="stylesheet" href="./css/style.css">
+
+<link rel="stylesheet"
+href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+
+<link rel="stylesheet"
+href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css">
+</head>
+
+<body>
+    <div id="toastContainer"></div>
+<div class="container">
+
+    <h1 class="app-title">
+
+    <img
+    src="./images/logo.png"
+    alt="Logo"
+    class="logo">
+
+    <span>Smart Task Manager</span>
+
+</h1>
+    <div class="theme-toggle">
+
+    <button id="themeBtn">
+
+        <i class="fa-solid fa-moon"></i> Dark Mode
+
+    </button>
+
+</div>
+
+    <!-- ===========================
+     Dashboard
+=========================== -->
+
+<div class="dashboard">
+
+    <!-- Progress Section -->
+
+    <div class="progress-section">
+
+        <div class="progress-header">
+
+            <div class="progress-title">
+
+                <h3>Task Progress</h3>
+
+                <p>Track your overall task completion</p>
+
+            </div>
+
+            <span id="progressText">0%</span>
+
+        </div>
+
+        <div class="progress-bar">
+
+            <div id="progressFill"></div>
+
+        </div>
+
+    </div>
+
+    <!-- Stats -->
+
+    <div class="stats">
+
+        <div class="stat-card stat-total"> 
+
+            <div class="stat-icon">
+
+                <i class="ti ti-list-check"></i>
+
+            </div>
+
+            <div class="stat-info">
+
+                <h3 id="totalTasks">0</h3>
+
+                <p>Total Tasks</p>
+
+            </div>
+
+        </div>
+
+        <div class="stat-card stat-completed"> 
+
+            <div class="stat-icon">
+
+                <i class="ti ti-circle-check"></i>
+
+            </div>
+
+            <div class="stat-info">
+
+                <h3 id="completedTasks">0</h3>
+
+                <p>Completed</p>
+
+            </div>
+
+        </div>
+
+        <div class="stat-card stat-pending">
+
+            <div class="stat-icon">
+
+                <i class="ti ti-clock-hour-4"></i>
+
+            </div>
+
+            <div class="stat-info">
+
+                <h3 id="pendingTasks">0</h3>
+
+                <p>Pending</p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<!-- ===========================
+     Task Composer
+=========================== -->
+
+<div class="task-composer">
+
+    <div class="composer-input">
+    <input
+        type="text"
+        id="taskTitle"
+        maxlength="80"
+        placeholder="Task Title">
+
+    <textarea
+        id="taskInput"
+        rows="5"
+        placeholder="Start writing your task..."></textarea>
+
+</div>
+
+    <div class="composer-footer">
+
+        <div class="composer-left">
+
+            <select id="priority">
+                <option value="High">High</option>
+<option value="Medium" selected>Medium</option>
+<option value="Low">Low</option>
+            </select>
+
+            <div class="date-wrapper">
+
+    <i class="ti ti-calendar-event"></i>
+
+    <input
+        type="text"
+        id="dueDate"
+        placeholder="Select due date">
+
+</div>
+
+        </div>
+
+        <button id="addTaskBtn">
+            <i class="fa-solid fa-sparkles"></i> Add Task
+        </button>
+
+    </div>
+
+</div>
+
+<!-- Action Buttons -->
+<div class="task-controls">
+
+
+    <button id="clearAllBtn" class="clear-btn">
+        <i class="fa-solid fa-trash"></i> Clear All
+    </button>
+
+    <button id="exportBtn" class="export-btn">
+        <i class="fa-solid fa-file-export"></i> Export
+    </button>
+
+    <label for="importInput" class="import-btn">
+        <i class="fa-solid fa-file-import"></i> Import
+    </label>
+
+    <input
+        type="file"
+        id="importInput"
+        accept=".json"
+        hidden>
+
+</div>
+
+<div class="search-sort-row">
+
+    <div class="search-box">
+    <i class="ti ti-search"></i>
+
+    <input
+        type="text"
+        id="searchInput"
+        placeholder="Search tasks, deadlines, or keywords...">
+</div>
+
+    <div class="sort-box">
+
+    <label for="sortSelect">
+        <i class="ti ti-arrows-sort"></i>
+        Sort By
+    </label>
+
+    <select id="sortSelect">
+
+        <option value="newest">Recent</option>
+<option value="oldest">Oldest</option>
+<option value="priority">Priority</option>
+<option value="date">Deadline</option>
+
+    </select>
+
+</div>
+
+</div>
+
+<!-- Filter Buttons -->
+<div class="filter-buttons">
+
+    <button class="filter-btn active" data-filter="all">
+        <i class="ti ti-layout-grid"></i>
+        All
+    </button>
+
+    <button class="filter-btn" data-filter="pending">
+        <i class="ti ti-clock-hour-4"></i>
+        Pending
+    </button>
+
+    <button class="filter-btn" data-filter="completed">
+        <i class="ti ti-circle-check"></i>
+        Completed
+    </button>
+
+</div>
+
+<div class="task-list">
+
+    <div class="task-header">
+
+    <h2>My Tasks</h2>
+
+</div>
+
+    <ul id="taskList">
+
+        <li class="empty-message">
+    <i class="ti ti-notes-off"></i>
+    <p>No tasks yet</p>
+    <span>Create your first task to get started.</span>
+</li>
+
+<li
+class="search-empty-message"
+style="display:none;">
+
+    <i class="ti ti-search-off"></i>
+
+    <p>
+        No matching tasks found
+    </p>
+
+    <span>
+        Try changing your keywords or filters.
+    </span>
+
+</li>
+
+ </ul>
+
+</div>
+</div> <!-- container end -->
+
+<!-- ==========================
+     Edit Task Modal
+========================== -->
+
+<div id="editModal" class="edit-modal">
+
+    <div class="edit-modal-content">
+
+        <div class="edit-modal-header">
+
+            <h2>Edit Task</h2>
+
+            <button id="closeEditModal">
+                <i class="ti ti-x"></i>
+            </button>
+
+        </div>
+
+        <!-- Mini Composer -->
+        <div class="task-composer edit-composer">
+
+            <div class="composer-input">
+
+                <input
+                    type="text"
+                    id="editTitle"
+                    maxlength="80"
+                    placeholder="Task Title">
+
+                <textarea
+                    id="editDescription"
+                    rows="5"
+                    placeholder="Start writing your task...">
+                </textarea>
+
+            </div>
+
+            <div class="composer-footer">
+
+                <div class="composer-left">
+
+                    <select id="editPriority">
+
+                        <option value="High">High</option>
+                        <option value="Medium">Medium</option>
+                        <option value="Low">Low</option>
+
+                    </select>
+
+                    <div class="date-wrapper">
+
+                        <i class="ti ti-calendar-event"></i>
+
+                        <input
+                            type="text"
+                            id="editDueDate"
+                            placeholder="Select due date">
+
+                    </div>
+
+                </div>
+
+                <button id="updateTaskBtn">
+
+                    <i class="fa-solid fa-check"></i>
+
+                    Update Task
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+<!-- Delete Confirmation Modal -->
+
+<div id="deleteModal" class="delete-modal">
+
+    <div class="delete-modal-content">
+
+        <div class="delete-modal-header">
+
+    <div class="delete-modal-icon">
+        <i class="ti ti-trash"></i>
+    </div>
+
+    <div class="delete-header-text">
+
+        <h2>
+            Delete Task
+        </h2>
+
+        <p>
+            This action cannot be undone.
+        </p>
+
+    </div>
+
+</div>
+
+        <p
+class="delete-description"
+id="deleteModalText">
+</p>
+
+        <div class="delete-modal-actions">
+
+            <button id="cancelDeleteBtn">
+    Keep Task
+</button>
+
+           <button id="confirmDeleteBtn">
+    Delete Task
+</button>
+
+        </div>
+
+    </div>
+
+</div>
+<div id="clearAllModal" class="delete-modal">
+
+    <div class="delete-modal-content">
+
+        <div class="delete-modal-header">
+
+            <div class="delete-modal-icon">
+                <i class="ti ti-alert-triangle"></i>
+            </div>
+
+            <div class="delete-header-text">
+
+                <h2>Clear All Tasks</h2>
+
+                <p>
+                    This action cannot be undone.
+                </p>
+
+            </div>
+
+        </div>
+
+        <p
+        class="delete-description"
+        id="clearAllModalText">
+        </p>
+
+        <div class="delete-modal-actions">
+
+            <button id="cancelClearBtn">
+                Keep Tasks
+            </button>
+
+            <button id="confirmClearBtn">
+                Clear Everything
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.2/Sortable.min.js"></script>
+<script src="./js/script.js"></script>
+
+</body>
+
+</html> 
