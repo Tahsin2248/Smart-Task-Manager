@@ -496,12 +496,14 @@ if(task.dueDate && !task.completed){
 
     if(diffDays < 0){
 
-        dueStatus = `
-        <span class="due-status overdue">
-            <i class="ti ti-alert-triangle"></i>
-            ${Math.abs(diffDays)} day overdue
-        </span>
-        `;
+        if(window.innerWidth > 768){
+    dueStatus = `
+    <span class="due-status overdue">
+        <i class="ti ti-alert-triangle"></i>
+        ${Math.abs(diffDays)} day overdue
+    </span>
+    `;
+}
 
     }
 
