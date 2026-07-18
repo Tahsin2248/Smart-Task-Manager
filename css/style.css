@@ -1684,6 +1684,15 @@ gap:12px;
     justify-content:center;
     font-size:11px;
 }
+.task-date-info{
+    display:flex;
+    align-items:center;
+    justify-content:flex-end;
+}
+
+.due-status{
+    display:none;
+}
 
 }
 
@@ -1725,6 +1734,15 @@ gap:12px;
     .sort-box{
         width:100%;
         max-width:none;
+    }
+
+}
+@media (min-width:769px){
+
+    .due-status{
+        display:inline-flex;
+        align-items:center;
+        gap:6px;
     }
 
 }

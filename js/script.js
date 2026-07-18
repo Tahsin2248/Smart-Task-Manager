@@ -478,36 +478,32 @@ taskItem.classList.add(
         task.priority.toLowerCase()
     );
 }
+
 let dueStatus = "";
 
 const today = new Date();
 today.setHours(0,0,0,0);
 
-if(task.dueDate && !task.completed){
+if (task.dueDate && !task.completed && window.innerWidth > 768) {
 
     const dueDate = new Date(task.dueDate);
     dueDate.setHours(0,0,0,0);
 
     const diffTime = dueDate - today;
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
 
-    const diffDays = Math.ceil(
-        diffTime / (1000 * 60 * 60 * 24)
-    );
+    if (diffDays < 0) {
 
-    if(diffDays < 0){
-
-        if(window.innerWidth > 768){
-    dueStatus = `
-    <span class="due-status overdue">
-        <i class="ti ti-alert-triangle"></i>
-        ${Math.abs(diffDays)} day overdue
-    </span>
-    `;
-}
+        dueStatus = `
+        <span class="due-status overdue">
+            <i class="ti ti-alert-triangle"></i>
+            ${Math.abs(diffDays)} day overdue
+        </span>
+        `;
 
     }
 
-    else if(diffDays === 0){
+    else if (diffDays === 0) {
 
         dueStatus = `
         <span class="due-status today">
@@ -518,7 +514,7 @@ if(task.dueDate && !task.completed){
 
     }
 
-    else if(diffDays === 1){
+    else if (diffDays === 1) {
 
         dueStatus = `
         <span class="due-status tomorrow">
@@ -529,7 +525,7 @@ if(task.dueDate && !task.completed){
 
     }
 
-    else{
+    else {
 
         dueStatus = `
         <span class="due-status upcoming">
@@ -627,10 +623,20 @@ ${task.completed ? "disabled" : ""}
 
     <span class="due-date">
         <i class="fa-regular fa-calendar"></i>
-        ${task.dueDate || "No Deadline"}
+
+        ${
+            task.dueDate
+            ? task.dueDate
+            : "No Deadline"
+        }
+
     </span>
 
-    ${dueStatus}
+    ${
+        window.innerWidth > 768
+        ? dueStatus
+        : ""
+    }
 
 </div>
 
