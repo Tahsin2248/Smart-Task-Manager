@@ -233,21 +233,24 @@ tasks.forEach(task=>{
 
 addTaskBtn.addEventListener("click", addTask);
 
-taskInput.addEventListener("keydown", function (event) {
+taskInput.addEventListener("keydown", function(event){
 
-    // Shift + Enter = New Line
-    if (event.key === "Enter" && event.shiftKey) {
+    if(event.key === "Enter"){
+
+        // Mobile & PC এ Enter = New Line
 
         return;
 
     }
 
-    // Enter = Add Task
-    if (event.key === "Enter") {
+});
+taskTitle.addEventListener("keydown",function(e){
 
-        event.preventDefault();
+    if(e.key==="Enter"){
 
-        addTask();
+        e.preventDefault();
+
+        taskInput.focus();
 
     }
 

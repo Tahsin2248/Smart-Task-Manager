@@ -1529,40 +1529,55 @@ gap:12px;
     ------------------------ */
 
    .composer-footer{
-    display:flex;
-    align-items:center;
+
+    display:grid;
+
+    grid-template-columns:1fr 100px;
+
     gap:12px;
+
+    align-items:end;
+
 }
 
 .composer-left{
-    flex:1;
+
     display:flex;
+
     flex-direction:column;
+
     gap:10px;
+
 }
 
 #priority,
 .date-wrapper{
+
     width:100%;
+
 }
 
 #addTaskBtn{
-    flex:0 0 95px;
 
-    height:48px;
+    height:106px;
 
-    border-radius:14px;
+    border-radius:18px;
 
-    font-size:15px;
+    font-size:17px;
+
     font-weight:700;
 
     display:flex;
-    align-items:center;
+
+    flex-direction:column;
+
     justify-content:center;
 
-    padding:0 12px;
-}
+    align-items:center;
 
+    gap:6px;
+
+}
 
     /* ------------------------
        Action Buttons
